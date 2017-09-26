@@ -1,0 +1,15 @@
+require: rubocop-rspec
+AllCops:
+  Exclude:
+    - 'bin/**/*'
+    - 'vendor/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
+Documentation:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 5
