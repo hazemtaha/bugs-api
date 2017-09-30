@@ -46,3 +46,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Elasticsearch integrations for ActiveModel/Record and Ruby on Rails
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
+# Ruby client for RabbitMQ (3.3+)
+gem "bunny", ">= 2.7.0"
+# A fast background processing framework for Ruby and RabbitMQ
+gem 'sneakers'
+# A Ruby client library for Redis
+gem 'redis'

@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services:
   db:
     image: mysql:5.7.19
@@ -8,21 +8,40 @@ services:
       - db-data:/var/lib/mysql
   elasticsearch:
     image: elasticsearch:5.5.2
+  rabbitmq:
+    image: rabbitmq:3.6.12-management
+    ports:
+      - 15000:15672
+  redis:
+    image: redis:3.2.11
   app:
     build: .
+    command: bash -c './wait-for-it.sh -t 20 rabbitmq:5672 -- bundle exec rails rabbitmq:setup_queue && ./init.sh'
     volumes:
       - .:/app
       - gems_cache:/gems
     environment:
       RAILS_ENV: development
     ports:
-      - 3000:3000
+      - 5000:3000
     stdin_open: true
     tty: true
     depends_on:
       - db
       - elasticsearch
       - rabbitmq
+  sneakers:
+    build: .
+    command: './wait-for-it.sh -t 20 rabbitmq:5672 -- bundle exec rake sneakers:run'
+    depends_on:
+      - app
+      - rabbitmq
+    volumes:
+      - .:/app
+      - gems_cache:/gems
+    environment:
+      RAILS_ENV: development
+      WORKERS: BugsWorker
 volumes:
   db-data:
   gems_cache:

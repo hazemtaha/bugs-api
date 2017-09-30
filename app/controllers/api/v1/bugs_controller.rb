@@ -1,6 +1,8 @@
 class Api::V1::BugsController < Api::V1::BaseController
-  before_action :set_bug, only: %i[show update destroy]
+  before_action :set_bug, only: %i[show]
 
+  # GET /bugs
+  # GET /bugs?query=term
   def index
     if params[:query].present?
       @bugs = Bug.search(params[:query])
@@ -23,7 +25,9 @@ class Api::V1::BugsController < Api::V1::BaseController
   def create
     @bug = Bug.new(bug_params)
     @bug.state = State.new(state_params)
-    if @bug.save
+    if @bug.valid?
+      @bug.number = $redis.incr("#{@bug.application_token}_bugs_count")
+      Publisher.publish('bugs', @bug)
       render json: { number: @bug.number }, status: :created
     else
       render json: @bug.errors, status: :unprocessable_entity
