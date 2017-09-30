@@ -17,6 +17,14 @@ class Bug < ApplicationRecord
     critical: 2
   }
 
+  def status=(value)
+    super(value.to_i)
+  end
+
+  def priority=(value)
+    super(value.to_i)
+  end
+
   def serializable_hash(options = nil)
     super({ only: %i[number application_token status priority comment],
             include: %i[state] }.merge(options || {}))
