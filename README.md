@@ -1,24 +1,57 @@
 # Instabug Coding Challenge
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+You can see the task [Here](TASK.md)
 
-Things you may want to cover:
+## Rquirement
+`docker` and `docker-compose`
 
-* Ruby version
+## Environment
+- Ruby 2.3.5
+- Rails 5.0.6
+- Mysql 5.7.19
+- Elasticsearch 5.5.2
+- RabbitMQ 3.6.12 with management plugin
+- Redis 3.2.11
 
-* System dependencies
+## Setup
+- run `docker-compose up` and you're good to go
+- API can be accessed from `localhost` on port `5000`
+- RabbitMQ admin UI can be accessed from `localhost` on port `15000`
 
-* Configuration
+## Testing the API
+### Postman Collection
+use this [collection](https://www.getpostman.com/collections/b50c33a9da383c824c7a) to test the API endpoints using Postman
+### Curl commands
+#### Create new bug
+```
+curl -X POST \
+  http://localhost:5000/api/v1/bugs \
+  -H 'content-type: application/json' \
+  -d '{
+	"application_token": "134",
+	"status": 2,
+	"priority": 1,
+	"comment": "This is just a random bug comment",
+	"state": {
+		"device": "IPad Mini 2",
+		"os": "OSX",
+		"memory": 2048,
+		"storage": 128
+	}
+}'
+```
+#### Fetch bug (Change the values)
+```
+curl -X GET \
+  'http://localhost:5000/api/v1/bugs/1?application_token=123' \
+  -H 'content-type: application/json' \
+```
+#### Search bugs
+```
+curl -X GET \
+  'http://localhost:5000/api/v1/bugs?query=term'
+```
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## TODO
+- [ ] Fix Rubocop offenses
+- [ ] Test Elasticsearch integration
