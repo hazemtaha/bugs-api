@@ -2,7 +2,7 @@ class Api::V1::BugsController < Api::V1::BaseController
   before_action :set_bug, only: %i[show]
 
   # GET /bugs
-  # GET /bugs?query=term
+  # GET /bugs?query=SEARCH_TERM
   def index
     if params[:query].present?
       @bugs = Bug.search(params[:query])
@@ -12,7 +12,7 @@ class Api::V1::BugsController < Api::V1::BaseController
     render json: @bugs
   end
 
-  # GET /bugs/1
+  # GET /bugs/1?application_token=APPLICATION_TOKEN
   def show
     if @bug.present?
       render json: @bug
