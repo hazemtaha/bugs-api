@@ -1,9 +1,23 @@
 class Bug < ApplicationRecord
+  include Searchable
+
   belongs_to :state
 
   # validates_uniqueness_of :number, scope: :application_token
   validates :application_token, presence: true
   before_create :generate_bug_number
+
+  enum status: {
+    _new: 0,
+    in_progress: 1,
+    closed: 2
+  }
+
+  enum priority: {
+    minor: 0,
+    major: 1,
+    critical: 2
+  }
 
   def last_saved_bug_number
     Bug.select(:number)

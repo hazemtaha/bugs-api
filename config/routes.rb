@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      post '/bugs', to: 'bugs#create', as: 'bugs'
+      get '/bugs', to: 'bugs#index', as: 'bugs'
+      post '/bugs', to: 'bugs#create'
       get '/bugs/:application_token/:number', to: 'bugs#show', as: 'bug'
     end
   end

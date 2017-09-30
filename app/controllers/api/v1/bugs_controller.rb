@@ -1,6 +1,15 @@
 class Api::V1::BugsController < Api::V1::BaseController
   before_action :set_bug, only: %i[show update destroy]
 
+  def index
+    if params[:query].present?
+      @bugs = Bug.search(params[:query])
+    else
+      @bugs = Bug.all
+    end
+    render json: @bugs
+  end
+
   # GET /bugs/1
   def show
     if @bug.present?
