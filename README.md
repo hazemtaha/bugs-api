@@ -17,6 +17,10 @@ You can see the task [Here](TASK.md)
 - run `docker-compose up` and you're good to go
 - API can be accessed from `localhost` on port `5000`
 - RabbitMQ admin UI can be accessed from `localhost` on port `15000`
+- To run unit tests
+```
+docker-compose run app rspec
+```
 
 ## Testing the API
 ### Postman Collection
