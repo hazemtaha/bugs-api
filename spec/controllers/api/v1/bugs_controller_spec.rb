@@ -20,7 +20,7 @@ RSpec.describe Api::V1::BugsController, type: :controller do
   let(:invalid_attributes) do
     {
       status: 2,
-      priority: 1,
+      priority: 50,
       comment: 'this is a bug comment',
     }
   end
